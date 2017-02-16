@@ -3,7 +3,7 @@
 setwd("C:/Users/amart90/Documents/R/Outlier")
 
 ##  Load Packages
-3 + 2
+3 + 2 + 2
 
 ##  Load Data
 trees = data.frame(read.csv("tbl_trees.csv"))
