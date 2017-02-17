@@ -1,6 +1,12 @@
 ###    Setup workspace
-##  Set directory
-setwd("C:/Users/amart90/Documents/R/Outlier")
+#Identify user
+username <- Sys.getenv("USERNAME")
+
+#Create file path to Git repository
+dir <- paste("C:/Users/", username, "/Documents/GitHub/Quality-Control---Overstory", sep = "")
+
+#Set working directory
+setwd(dir)
 
 ##  Load Packages
 
@@ -8,6 +14,10 @@ setwd("C:/Users/amart90/Documents/R/Outlier")
 trees = data.frame(read.csv("tbl_trees.csv"))
 sample_units = data.frame(read.csv("tbl_unit.csv"))
 sample_episodes = data.frame(read.csv("tbl_unitSamplingEpisode.csv"))
+
+## Remove unnecessary data from sample_units object
+## This will make file easier to view
+sample_units <- sample_units[,-c(5:12, 14:17, 21:24)]
 
 ##  Add Unit Name
 unitID <- merge(sample_episodes[,1:2], sample_units[,1:3], by = "unitID")
@@ -102,5 +112,13 @@ if(nrow(OutR1) > 0) {OutR1$Error <- "Regression (StdRes > |3.5|)"; OutReg <- rbi
 ###Compile and Export All Outliers to Overstory_Outliers.xls
 if(nrow(OutLog) > 0) {Overstory_Outliers <- rbind(OutLog)}
 if(nrow(OutReg) > 0) {Overstory_Outliers <- rbind(Overstory_Outliers, OutReg)}
-if(nrow(Overstory_Outliers) > 0) {write.csv(Overstory_Outliers, file = "Overstory_Outliers.csv")}
-  
+#Date and time stamp on output file
+dt <- Sys.Date()
+tm <- format(Sys.time(), format = "%H.%M.%S", 
+             tz = "", usetz = FALSE)
+                                                                            
+if(nrow(Overstory_Outliers) > 0) {write.csv(Overstory_Outliers, file = paste(dt, "_", tm, "_", username, 
+                                                                             "_Overstory_Outliers.csv", 
+                                                                             sep = ""))}
+
+
