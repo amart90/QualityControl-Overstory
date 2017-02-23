@@ -24,6 +24,7 @@ unitID <- merge(sample_episodes[,1:2], sample_units[,1:3], by = "unitID")
 unitID <- unitID[,-3]
 unitID <- unitID[,-1]
 trees <- merge(trees , unitID , by = "unitSamplingEpisodeID")
+#during this step 202 records are deleted (because they have an unrecognized UnitSamplingEpisodeID of 18).  It appears that they are duplicates from UnitSamplingID 11 (Angel)
 
 ###    Logical Boundaries
 ##  Heights
@@ -93,7 +94,6 @@ plot(trees$dbh_in, trees$ht_ft, xlab = "DBH (in)", ylab = "Height (ft)", main = 
 abline(mod1)
 r2 = summary(mod1)$adj.r.squared
 p = summary(mod1)$coefficients[2,4]
-p = 0.2
 rp = vector('expression', 2)
 rp[1] = substitute(expression(italic(R)^2 == MYVALUE), list(MYVALUE = format(r2, dig = 3)))[2]
 rp[2] = substitute(expression(italic(p) == MYOTHERVALUE), list(MYOTHERVALUE = format(p, digits = 3))) [2]
