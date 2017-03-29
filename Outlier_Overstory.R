@@ -122,7 +122,7 @@ res_Htlc2 <- res_Htlc[abs(res_Htlc) > 3.5]
 
 ##  Plots
 
-#Height Vs. DBH
+#Htlc Vs. Ht
 plot(premodHtlc$ht_ft, premodHtlc$htlc_ft, xlab = "Ht (ft)", ylab = "Height to live crown (ft)", main = "Htlc vs. Ht")
 abline(mod_Htlc)
 r2_Htlc = summary(mod_Htlc)$adj.r.squared
@@ -174,7 +174,7 @@ dec_error <- function(column) {
   assign(paste0("Out_", column), get(paste0("Out_", column))[q8, ])
   assign(paste0("Out_", column), get(paste0("Out_", column))[!is.na(get(paste0("Out_", column))[,column]),])
   if(nrow(get(paste0("Out_", column))) > 0) {
-    ErrorCol <- matrix(data = paste("Excess precision: ", column), nrow = nrow(get(paste0("Out_", column))), ncol= (1))
+    ErrorCol <- matrix(data = paste("Precision overstated: ", column), nrow = nrow(get(paste0("Out_", column))), ncol= (1))
     colnames(ErrorCol) <- "Error"
     assign(paste0("Out_", column), cbind(get(paste0("Out_", column)), ErrorCol))
     ifelse(exists("OutDec"), OutDec <- rbind(OutDec, get(paste0("Out_", column))), OutDec <- rbind(get(paste0("Out_", column))))
